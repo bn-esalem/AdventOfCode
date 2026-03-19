@@ -17,66 +17,10 @@ int main()
         return -1;
     }
 
-    /*while (fscanf(fp, "%lld-%lld,", &start, &end) != EOF)
-    {
-        long long minCheck = 1;
-        long long maxCheck = 10;
-        
-        long long multiplier = 10;
-
-        long long found[1000]; 
-        int foundCount = 0;
-
-        for (int i = 1; i <= 9; i++)
-        {
-            for(long long num = minCheck; num < maxCheck; num ++)
-            {
-                long long InvalidId = num;
-
-                for (int numRepeats = 2; numRepeats <= 15; numRepeats ++)
-                {
-                    InvalidId = (InvalidId * multiplier) + num;
-
-                    if (InvalidId > end)
-                    {
-                        break;
-                    }
-
-                    else if (InvalidId >= start)
-                    {
-                        int alreadyCounted = 0;
-
-                        for (int i = 0; i < foundCount; i++) 
-                        {
-                            if (found[i] == InvalidId) 
-                            {
-                                alreadyCounted = 1;
-                                break;
-                            }
-                        
-                        }
-                    
-
-                        if (!alreadyCounted && foundCount < 1000)
-                        {
-                            sumInvalidIds += InvalidId;
-                            found[foundCount ++] = InvalidId;
-                        }
-                    }
-                }
-            }
-
-            minCheck = maxCheck;
-            maxCheck *= 10;
-            multiplier *= 10;
-        }
-
-    }*/
-
     while (fscanf(fp, "%lld-%lld,", &start, &end) != EOF)
     {
          // 1. INCREASE SIZE to 1000 to be safe
-        long long found[1000]; 
+        long long found[100]; 
         int foundCount = 0;
 
         for (long long pattern = 1; pattern <= 99999; pattern++) 
@@ -112,7 +56,7 @@ int main()
 
                     // 3. ADD SAFETY CHECK FOR THE ARRAY SIZE
                     
-                    if (!alreadyCounted && foundCount < 1000)
+                    if (!alreadyCounted && foundCount < 100)
                     {
                         sumInvalidIds += invalidId;
                         found[foundCount++] = invalidId;

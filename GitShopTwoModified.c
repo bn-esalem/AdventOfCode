@@ -20,7 +20,7 @@ int main()
     while (fscanf(fp, "%lld-%lld,", &start, &end) != EOF)
     {
          // 1. INCREASE SIZE to 1000 to be safe
-        long long found[100]; 
+        long long found[1000]; 
         int foundCount = 0;
 
         for (long long pattern = 1; pattern <= 99999; pattern++) 
@@ -56,7 +56,7 @@ int main()
 
                     // 3. ADD SAFETY CHECK FOR THE ARRAY SIZE
                     
-                    if (!alreadyCounted && foundCount < 100)
+                    if (!alreadyCounted && foundCount < 1000)
                     {
                         sumInvalidIds += invalidId;
                         found[foundCount++] = invalidId;

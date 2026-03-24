@@ -1,7 +1,11 @@
 #include <stdio.h>
+#include <string.h>
 #include <stdbool.h>
 
 # define FILENAME "InvalidIDs.txt"
+
+bool isInvalidID(long long id);
+
 
 int main()
 {
@@ -17,110 +21,15 @@ int main()
         return -1;
     }
 
-    /*while (fscanf(fp, "%lld-%lld,", &start, &end) != EOF)
+    while(fscanf(fp, "%lld-%lld,", &start, &end) != EOF)
     {
-        long long minCheck = 1;
-        long long maxCheck = 10;
-        
-        long long multiplier = 10;
-
-        long long found[1000]; 
-        int foundCount = 0;
-
-        for (int i = 1; i <= 9; i++)
+        for(long long currentId = start; currentId <= end; currentId++)
         {
-            for(long long num = minCheck; num < maxCheck; num ++)
+            if(isInvalidID(currentId) == true)
             {
-                long long InvalidId = num;
-
-                for (int numRepeats = 2; numRepeats <= 15; numRepeats ++)
-                {
-                    InvalidId = (InvalidId * multiplier) + num;
-
-                    if (InvalidId > end)
-                    {
-                        break;
-                    }
-
-                    else if (InvalidId >= start)
-                    {
-                        int alreadyCounted = 0;
-
-                        for (int i = 0; i < foundCount; i++) 
-                        {
-                            if (found[i] == InvalidId) 
-                            {
-                                alreadyCounted = 1;
-                                break;
-                            }
-                        
-                        }
-                    
-
-                        if (!alreadyCounted && foundCount < 1000)
-                        {
-                            sumInvalidIds += InvalidId;
-                            found[foundCount ++] = InvalidId;
-                        }
-                    }
-                }
-            }
-
-            minCheck = maxCheck;
-            maxCheck *= 10;
-            multiplier *= 10;
-        }
-
-    }*/
-
-    while (fscanf(fp, "%lld-%lld,", &start, &end) != EOF)
-    {
-         // 1. INCREASE SIZE to 1000 to be safe
-        long long found[1000]; 
-        int foundCount = 0;
-
-        for (long long pattern = 1; pattern <= 99999; pattern++) 
-        {
-            long long range = 10;
-            
-            while (range <= pattern) range *= 10;
-
-            long long invalidId = pattern;
-
-            while (true) 
-            {
-                invalidId = (invalidId * range) + pattern;
-
-                if (invalidId > end)
-                {
-                    break;
-                }
-
-                else if (invalidId>= start) 
-                {
-                    int alreadyCounted = 0;   // 2. CHECK FOR DUPLICATES
-                    
-                    for (int i = 0; i < foundCount; i++)
-                    {
-                        if (found[i] == invalidId)
-                        {
-                            alreadyCounted = 1;
-                            
-                            break;
-                        }
-                    }
-
-                    // 3. ADD SAFETY CHECK FOR THE ARRAY SIZE
-                    
-                    if (!alreadyCounted && foundCount < 1000)
-                    {
-                        sumInvalidIds += invalidId;
-                        found[foundCount++] = invalidId;
-                    }
-                }
+                sumInvalidIds += currentId;
             }
         }
-
     }
 
     fclose(fp);
@@ -129,4 +38,37 @@ int main()
     printf("Total of Invalid Ids is: %lld\n", sumInvalidIds);
 
     return 0;
+}
+
+bool isInvalidID (long long id)
+{
+    char str[32];
+    sprintf(str, "%lld", id);
+    int totalLen = strlen(str);
+
+    for(int patternLen = 1; patternLen <= totalLen / 2; patternLen++)
+    {
+        if(totalLen % patternLen == 0)
+        {
+            bool matches = true;
+
+            for(int i = patternLen; i < totalLen; i++)
+            {
+                if(str[i] != str[i % patternLen])
+                {
+                    matches = false;
+                    break;
+                }
+            }
+
+            if(matches == true)
+            {
+                printf("Invalid ID found: %lld (Pattern length: %d)\n", id, patternLen);
+                return true;
+            }
+        }
+
+    }
+
+    return false;
 }

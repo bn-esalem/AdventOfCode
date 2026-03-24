@@ -20,17 +20,17 @@ int main()
 
     while (fscanf(fp, "%lld-%lld,", &start, &end) != EOF)
     {
-        long long mutiplierBase = 10;
-        long long startHalf = 1;
+        long long baseTen = 10;
+        long long minPattern = 1;
 
         for(int length = 1; length <= 5; length ++)
         {
-            long long multiplier = mutiplierBase + 1;
-            long long endHalf = mutiplierBase;
+            long long repeater = baseTen + 1;  // is like a stamp
+            long long maxPattern = baseTen;
             
-            for(long long half = startHalf; half < endHalf; half++)
+            for(long long pattern = minPattern; pattern < maxPattern; pattern++)
             {
-                long long invalidId = half * multiplier;
+                long long invalidId = pattern * repeater;
                 
                 if (invalidId >= start && invalidId <= end)
                 {
@@ -38,8 +38,8 @@ int main()
                 }
             }
 
-            startHalf = mutiplierBase;
-            mutiplierBase *= 10;
+            minPattern = baseTen;
+            baseTen *= 10;
         }        
     }
 

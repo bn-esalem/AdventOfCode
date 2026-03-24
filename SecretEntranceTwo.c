@@ -19,7 +19,7 @@ int main()
         return -1;
     }
 
-    // read from file until the end
+    // read from file until the end and using CLICK method (0x434C49434B)
 
     while (fscanf(fp, " %c%d", &direction, &distance) != EOF)
     {
@@ -27,7 +27,7 @@ int main()
         {
             if (direction == 'R')
             {
-                position = position + 1; // Move right
+                position = position + 1; // Move right "we change the pos 1st"
 
                 if (position == 100)
                 {  
